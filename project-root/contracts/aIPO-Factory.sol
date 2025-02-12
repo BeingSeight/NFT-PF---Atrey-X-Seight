@@ -26,4 +26,12 @@ contract IPOFactory {
             isActive: true
         });
     }
+
+    function purchaseShares(string memory ipoId, uint256 numberOfShares) external payable {
+        CompanyIPO storage ipo = ipos[ipoId];
+        require(ipo.isActive, "IPO is not active");
+        require(msg.value == numberOfShares * ipo.pricePerShare, "Incorrect payment amount");
+
+        // Logic to transfer shares to the buyer
+    }
 }

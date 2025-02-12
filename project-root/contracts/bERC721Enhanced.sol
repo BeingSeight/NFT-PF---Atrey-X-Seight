@@ -13,4 +13,14 @@ contract ERC721Enhanced is ERC721 {
         _ipoMetadata[tokenId] = metadataCID;
         _safeMint(to, tokenId);
     }
+
+    function purchaseNFT(uint256 tokenId) external payable {
+        require(_exists(tokenId), "Token does not exist");
+        require(msg.value == price, "Incorrect payment amount");
+
+        address owner = ownerOf(tokenId);
+        payable(owner).transfer(msg.value);
+
+        _transfer(owner, msg.sender, tokenId);
+    }
 }
